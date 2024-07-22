@@ -9,7 +9,6 @@ import com.musubi.domain.user.exception.AlreadyExistEmailException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
 import com.musubi.global.utils.ErrorMessage;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +21,9 @@ public class UserService {
 
     public void signUpDemo(UserSingUpDto userSingUpDto) {
 
-        if (userRepository.existsByEmail(userSingUpDto.getEmail())) {
+        userRepository.findByEmail(userSingUpDto.getEmail()).ifPresent(user -> {
             throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_USER_ERROR.getErrorMessage());
-        }
+        });
 
         User user = User.builder()
                 .email(userSingUpDto.getEmail())
@@ -38,13 +37,10 @@ public class UserService {
 
     public void loginDemo(UserLoginDto userLoginDto) {
 
-        Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
+        User user = userRepository.findByEmail(userLoginDto.getEmail())
+                .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
 
-        if (user.isEmpty()) {
-            throw new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage());
-        }
-
-        if (!user.get().validatePassword(userLoginDto.getPassword())) {
+        if (!user.validatePassword(userLoginDto.getPassword())) {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
         }
     }
