@@ -9,10 +9,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User extends BaseEntity { // 보호자
@@ -26,6 +28,9 @@ public class User extends BaseEntity { // 보호자
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String nickname;

@@ -4,6 +4,7 @@ package com.musubi.domain.user.application;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
+import com.musubi.domain.user.dto.UserLoginResponseDto;
 import com.musubi.domain.user.dto.UserSignUpRequestDto;
 import com.musubi.domain.user.exception.AlreadyExistEmailException;
 import com.musubi.domain.user.exception.NotFoundUserException;
@@ -28,6 +29,7 @@ public class UserService {
         User user = User.builder()
                 .email(userSignUpRequestDto.getEmail())
                 .password(userSignUpRequestDto.getPassword())
+                .name(userSignUpRequestDto.getName())
                 .nickname(userSignUpRequestDto.getNickname())
                 .phoneNumber(userSignUpRequestDto.getPhoneNumber())
                 .homeAddress(userSignUpRequestDto.getHomeAddress())
@@ -36,7 +38,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void loginDemo(UserLoginRequestDto userLoginRequestDto) {
+    public UserLoginResponseDto loginDemo(UserLoginRequestDto userLoginRequestDto) {
 
         User user = userRepository.findByEmail(userLoginRequestDto.getEmail())
                 .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
@@ -44,6 +46,8 @@ public class UserService {
         if (!user.validatePassword(userLoginRequestDto.getPassword())) {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
         }
+
+        return UserLoginResponseDto.fromEntity(user);
     }
 
     private void checkDuplicateEmail(String inputEmail) {

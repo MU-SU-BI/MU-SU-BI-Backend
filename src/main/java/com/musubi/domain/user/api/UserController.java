@@ -3,6 +3,7 @@ package com.musubi.domain.user.api;
 import com.musubi.domain.user.application.UserService;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
 import com.musubi.domain.user.dto.UserSignUpRequestDto;
+import com.musubi.global.utils.DefaultDataResponse;
 import com.musubi.global.utils.DefaultResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UserController {
 
     @PostMapping("login")
     ResponseEntity<?> login(@RequestBody @Valid UserLoginRequestDto userLoginRequestDto) {
-        userService.loginDemo(userLoginRequestDto);
-        return ResponseEntity.status(200).body(new DefaultResponse(200, "로그인 성공"));
+        return ResponseEntity.status(200)
+                .body(new DefaultDataResponse<>(200, "로그인 성공", userService.loginDemo(userLoginRequestDto)));
     }
 }
