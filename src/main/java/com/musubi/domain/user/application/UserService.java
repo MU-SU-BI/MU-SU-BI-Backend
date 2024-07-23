@@ -3,12 +3,12 @@ package com.musubi.domain.user.application;
 
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.User;
-import com.musubi.domain.user.dto.UserLoginDto;
-import com.musubi.domain.user.dto.UserSingUpDto;
+import com.musubi.domain.user.dto.UserLoginRequestDto;
+import com.musubi.domain.user.dto.UserSingUpRequestDto;
 import com.musubi.domain.user.exception.AlreadyExistEmailException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
-import com.musubi.global.utils.ErrorMessage;
+import com.musubi.global.constants.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,29 +19,48 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void signUpDemo(UserSingUpDto userSingUpDto) {
+    public void signUpDemo(UserSingUpRequestDto userSingUpRequestDto) {
 
-        userRepository.findByEmail(userSingUpDto.getEmail()).ifPresent(user -> {
-            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_USER_ERROR.getErrorMessage());
-        });
+        checkDuplicateEmail(userSingUpRequestDto.getEmail());
+        checkDuplicateNickname(userSingUpRequestDto.getNickname());
+        checkDuplicatePhoneNumber(userSingUpRequestDto.getPhoneNumber());
 
         User user = User.builder()
-                .email(userSingUpDto.getEmail())
-                .password(userSingUpDto.getPassword())
-                .phoneNumber(userSingUpDto.getPhoneNumber())
-                .homeAddress(userSingUpDto.getHomeAddress())
+                .email(userSingUpRequestDto.getEmail())
+                .password(userSingUpRequestDto.getPassword())
+                .nickname(userSingUpRequestDto.getNickname())
+                .phoneNumber(userSingUpRequestDto.getPhoneNumber())
+                .homeAddress(userSingUpRequestDto.getHomeAddress())
                 .build();
 
         userRepository.save(user);
     }
 
-    public void loginDemo(UserLoginDto userLoginDto) {
+    public void loginDemo(UserLoginRequestDto userLoginRequestDto) {
 
-        User user = userRepository.findByEmail(userLoginDto.getEmail())
+        User user = userRepository.findByEmail(userLoginRequestDto.getEmail())
                 .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
 
-        if (!user.validatePassword(userLoginDto.getPassword())) {
+        if (!user.validatePassword(userLoginRequestDto.getPassword())) {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
         }
+    }
+
+    private void checkDuplicateEmail(String inputEmail) {
+        userRepository.findByEmail(inputEmail).ifPresent((user) -> {
+            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_EMAIL_ERROR.getErrorMessage());
+        });
+    }
+
+    private void checkDuplicateNickname(String inputNickname) {
+        userRepository.findByNickname(inputNickname).ifPresent((user) -> {
+            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR.getErrorMessage());
+        });
+    }
+
+    private void checkDuplicatePhoneNumber(String inputPhoneNumber) {
+        userRepository.findByPhoneNumber(inputPhoneNumber).ifPresent((user) -> {
+            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_PHONE_NUMBER_ERROR.getErrorMessage());
+        });
     }
 }

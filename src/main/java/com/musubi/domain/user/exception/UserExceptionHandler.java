@@ -1,6 +1,5 @@
 package com.musubi.domain.user.exception;
 
-import com.musubi.global.utils.ErrorMessage;
 import com.musubi.global.utils.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +11,37 @@ public class UserExceptionHandler {
     @ExceptionHandler(AlreadyExistEmailException.class)
     public ResponseEntity<?> alreadyExistUserExceptionHandler(AlreadyExistEmailException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatusCode(ErrorMessage.ALREADY_EXIST_USER_ERROR.getHttpStatusCode())
+                .httpStatusCode(HttpStatus.CONFLICT.value())
                 .errorMessage(ex.getMessage())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(AlreadyExistNicknameException.class)
+    public ResponseEntity<?> alreadyExistNickNameException(AlreadyExistNicknameException ex) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatusCode(HttpStatus.CONFLICT.value())
+                .errorMessage(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(AlreadyExistPhoneNumberException.class)
+    public ResponseEntity<?> alreadyExistPhoneNumberException(AlreadyExistPhoneNumberException ex) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatusCode(HttpStatus.CONFLICT.value())
+                .errorMessage(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
     @ExceptionHandler(NotFoundUserException.class)
     public ResponseEntity<?> notFoundUserException(NotFoundUserException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatusCode(ErrorMessage.NOT_FOUND_USER_ERROR.getHttpStatusCode())
+                .httpStatusCode(HttpStatus.UNAUTHORIZED.value())
                 .errorMessage(ex.getMessage())
                 .build();
 
@@ -32,7 +51,7 @@ public class UserExceptionHandler {
     @ExceptionHandler(WrongPasswordException.class)
     public ResponseEntity<?> wrongPasswordException(WrongPasswordException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatusCode(ErrorMessage.WRONG_PASSWORD_ERROR.getHttpStatusCode())
+                .httpStatusCode(HttpStatus.UNAUTHORIZED.value())
                 .errorMessage(ex.getMessage())
                 .build();
 

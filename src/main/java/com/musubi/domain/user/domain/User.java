@@ -2,11 +2,11 @@ package com.musubi.domain.user.domain;
 
 
 import com.musubi.global.utils.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -15,19 +15,25 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "Users")
-public class User extends BaseEntity {
+public class User extends BaseEntity { // 보호자
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false, unique = true)
+    private String nickname;
+
+    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
+    @Column(nullable = false)
     private String homeAddress;
 
     public boolean validatePassword(String inputPassword) {
