@@ -4,7 +4,7 @@ package com.musubi.domain.user.application;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
-import com.musubi.domain.user.dto.UserSingUpRequestDto;
+import com.musubi.domain.user.dto.UserSignUpRequestDto;
 import com.musubi.domain.user.exception.AlreadyExistEmailException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
@@ -19,18 +19,18 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void signUpDemo(UserSingUpRequestDto userSingUpRequestDto) {
+    public void signUpDemo(UserSignUpRequestDto userSignUpRequestDto) {
 
-        checkDuplicateEmail(userSingUpRequestDto.getEmail());
-        checkDuplicateNickname(userSingUpRequestDto.getNickname());
-        checkDuplicatePhoneNumber(userSingUpRequestDto.getPhoneNumber());
+        checkDuplicateEmail(userSignUpRequestDto.getEmail());
+        checkDuplicateNickname(userSignUpRequestDto.getNickname());
+        checkDuplicatePhoneNumber(userSignUpRequestDto.getPhoneNumber());
 
         User user = User.builder()
-                .email(userSingUpRequestDto.getEmail())
-                .password(userSingUpRequestDto.getPassword())
-                .nickname(userSingUpRequestDto.getNickname())
-                .phoneNumber(userSingUpRequestDto.getPhoneNumber())
-                .homeAddress(userSingUpRequestDto.getHomeAddress())
+                .email(userSignUpRequestDto.getEmail())
+                .password(userSignUpRequestDto.getPassword())
+                .nickname(userSignUpRequestDto.getNickname())
+                .phoneNumber(userSignUpRequestDto.getPhoneNumber())
+                .homeAddress(userSignUpRequestDto.getHomeAddress())
                 .build();
 
         userRepository.save(user);

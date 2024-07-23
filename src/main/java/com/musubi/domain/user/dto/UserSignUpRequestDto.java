@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public final class UserSingUpRequestDto {
+public final class UserSignUpRequestDto {
 
     @NotBlank(message = "이메일 필드는 필수입니다.")
     private final String email;
