@@ -7,6 +7,8 @@ import com.musubi.domain.user.dto.UserLoginRequestDto;
 import com.musubi.domain.user.dto.UserLoginResponseDto;
 import com.musubi.domain.user.dto.UserSignUpRequestDto;
 import com.musubi.domain.user.exception.AlreadyExistEmailException;
+import com.musubi.domain.user.exception.AlreadyExistNicknameException;
+import com.musubi.domain.user.exception.AlreadyExistPhoneNumberException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
 import com.musubi.global.constants.ErrorMessage;
@@ -58,13 +60,13 @@ public class UserService {
 
     private void checkDuplicateNickname(String inputNickname) {
         userRepository.findByNickname(inputNickname).ifPresent((user) -> {
-            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR.getErrorMessage());
+            throw new AlreadyExistNicknameException(ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR.getErrorMessage());
         });
     }
 
     private void checkDuplicatePhoneNumber(String inputPhoneNumber) {
         userRepository.findByPhoneNumber(inputPhoneNumber).ifPresent((user) -> {
-            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_PHONE_NUMBER_ERROR.getErrorMessage());
+            throw new AlreadyExistPhoneNumberException(ErrorMessage.ALREADY_EXIST_PHONE_NUMBER_ERROR.getErrorMessage());
         });
     }
 }

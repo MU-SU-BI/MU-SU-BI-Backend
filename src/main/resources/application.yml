@@ -1,13 +1,3 @@
 spring:
-  h2:
-    console:
-      enabled: true
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;NON_KEYWORDS=USER
-
-  jpa:
-    show-sql: true
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop
+  profiles:
+    default: local
