@@ -33,6 +33,8 @@ public class UserService {
                 .password(userSignUpRequestDto.getPassword())
                 .name(userSignUpRequestDto.getName())
                 .nickname(userSignUpRequestDto.getNickname())
+                .age(userSignUpRequestDto.getAge())
+                .sex(userSignUpRequestDto.getSex())
                 .phoneNumber(userSignUpRequestDto.getPhoneNumber())
                 .homeAddress(userSignUpRequestDto.getHomeAddress())
                 .build();
