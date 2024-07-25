@@ -59,4 +59,4 @@ jobs:
             sudo docker run -d -p 80:8080 \
             --name ${{ secrets.DOCKERHUB_USERNAME }}/musubi-develop-was \
             -e AWS_HOST=${{ secrets.HOST }} \
-            ${{ secrets.DOCKERHUB_USERNAME }}/musubi-develop-was
+            musubi-develop-was
