@@ -4,6 +4,7 @@ package com.musubi.domain.user.dto;
 import com.musubi.domain.user.type.SexType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,6 +27,7 @@ public final class UserSignUpRequestDto {
     @Min(value = 1, message = "나이는 1 이상의 값이어야 합니다.")
     private int age;
 
+    @NotNull(message = "유효하지 않은 성별 입니다.")
     private SexType sex;
 
     @NotBlank(message = "전화번호 필드는 필수입니다.")
