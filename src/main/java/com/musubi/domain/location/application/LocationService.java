@@ -11,6 +11,7 @@ import com.musubi.domain.user.dto.UserLoginResponseDto;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
 import com.musubi.global.constants.ErrorMessage;
+import com.musubi.global.utils.NaverMapUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,14 @@ public class LocationService {
     private final LocationRepository locationRepository;
 
     public String checkLocation(LocationCheckRequestDto locationCheckRequestDto) { // 쓰레기 코드 2 (에러 핸들링 안함)
-        String tmp = locationCheckRequestDto.getCoordinate();
+        String tmp = locationCheckRequestDto.getCoordinate(); //LocationMaker.makeDistrict(tmp)
         Location location = Location.builder()
                 .coordinate(tmp)
-                .district(LocationMaker.makeDistrict(tmp))
+                .district(NaverMapUtil.districtParser(tmp))
                 .build();
 
         locationRepository.save(location);
+        //return LocationMaker.makeDistrict(tmp);
         return LocationCheckResponseDto.fromEntity(location);
     }
 

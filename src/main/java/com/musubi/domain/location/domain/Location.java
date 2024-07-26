@@ -35,7 +35,7 @@ public class Location extends BaseEntity {
     //private String address; // 전체 주소
 
     @Column(nullable = false)
-    private String district; // 동기준 분류
+    private String district; // 읍,면,동 기준 분류
 
     //@OneToOne
     //@JoinColumn(name = "Users")

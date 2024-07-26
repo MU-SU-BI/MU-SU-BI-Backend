@@ -12,7 +12,7 @@ public final class LocationCheckResponseDto {
    // private final String district;
 
     public static String fromEntity(Location location) {
-        return location.getCoordinate();
+        return location.getDistrict();
         //return LocationCheckResponseDto.builder()
         //        .userId(location.getId())
         //        .coordinate(location.getCoordinate())

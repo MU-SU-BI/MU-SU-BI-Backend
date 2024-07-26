@@ -51,11 +51,12 @@ public class LocationMaker { // 쓰레기 코드 1
             String result = "";
             for (int i = 1; i < 4; i++) {
                 result += tmp.getJSONObject("region").getJSONObject("area" + Integer.toString(i)).get("name");
+                result += " ";
             }
             return result;
 
         } catch (Exception e) {
-            return null;
+            return "null";
         }
     }
 }

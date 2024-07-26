@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public final class LocationCheckRequestDto {
-    private final String coordinate;
+    private String coordinate;
 }
