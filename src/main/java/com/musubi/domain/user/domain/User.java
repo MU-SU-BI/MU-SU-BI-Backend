@@ -65,6 +65,12 @@ public class User extends BaseEntity { // 보호자
         return inputPassword.equals(this.password);
     }
 
-    public void connectGuardian(Guardian guardian) { this.guardian = guardian; }
+    public void connectGuardian(Guardian guardian) {
+        this.guardian = guardian;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
 }

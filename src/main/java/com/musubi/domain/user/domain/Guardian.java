@@ -76,4 +76,7 @@ public class Guardian extends BaseEntity { // 보호자
         user.connectGuardian(this);
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 }
