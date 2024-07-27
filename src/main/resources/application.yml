@@ -1,3 +1,11 @@
 spring:
   profiles:
     default: local
+naver:
+  url:
+    search:
+      reverse: https://naveropenapi.apigw.ntruss.com
+      path: /map-reversegeocode/v2/gc
+  client:
+    id: 2i3lonwpk6
+    secret: lQcbg33Z2fVhNAs2uVFRLN9Ebxa0zEcD0nzOV3ec

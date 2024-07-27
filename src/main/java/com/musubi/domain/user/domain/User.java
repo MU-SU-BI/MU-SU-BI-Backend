@@ -1,6 +1,7 @@
 package com.musubi.domain.user.domain;
 
 
+import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
 import jakarta.persistence.Column;
@@ -10,6 +11,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,6 +55,7 @@ public class User extends BaseEntity { // 보호자
 
     @Column(nullable = false)
     private String homeAddress;
+
 
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(this.password);
