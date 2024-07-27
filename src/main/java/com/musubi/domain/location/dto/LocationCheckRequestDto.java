@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public final class LocationCheckRequestDto {
     private String coordinate;
+    private Long userId;
 }
