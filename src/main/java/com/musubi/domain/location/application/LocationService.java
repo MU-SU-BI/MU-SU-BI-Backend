@@ -14,7 +14,7 @@ public class LocationService {
 
     private final LocationRepository locationRepository;
 
-    public String checkLocation(LocationCheckRequestDto locationCheckRequestDto) { // 쓰레기 코드 2 (에러 핸들링 안함)
+    public LocationCheckResponseDto checkLocation(LocationCheckRequestDto locationCheckRequestDto) { // 쓰레기 코드 2 (에러 핸들링 안함)
         String tmp = locationCheckRequestDto.getCoordinate(); //LocationMaker.makeDistrict(tmp)
         Location location = Location.builder()
                 .coordinate(tmp)
@@ -22,6 +22,7 @@ public class LocationService {
                 .build();
 
         locationRepository.save(location);
+
         return LocationCheckResponseDto.fromEntity(location);
     }
 

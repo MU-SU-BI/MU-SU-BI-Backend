@@ -2,6 +2,7 @@ package com.musubi.domain.user.domain;
 
 
 import com.musubi.domain.location.domain.Location;
+import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,8 +59,17 @@ public class Guardian extends BaseEntity { // 보호자
     @OneToOne
     private Location location;
 
+    @OneToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(password);
+    }
+
+    public void connectUser(User user) {
+        this.user = user;
+        user.connectGuardian(this);
     }
 
 }
