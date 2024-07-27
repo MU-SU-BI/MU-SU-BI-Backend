@@ -35,4 +35,5 @@ public class GuardianSignUpRequestDto {
 
     @NotBlank(message = "자택 주소 필드는 필수입니다.")
     private final String homeAddress;
+
 }
