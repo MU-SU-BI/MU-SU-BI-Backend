@@ -8,6 +8,5 @@ import lombok.Getter;
 @Builder
 public class FCMRequestDto {
     private Long userId;
-    private String targetToken;
 }
 

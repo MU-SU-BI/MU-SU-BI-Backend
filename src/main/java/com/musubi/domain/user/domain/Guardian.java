@@ -14,7 +14,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,6 +57,8 @@ public class Guardian extends BaseEntity { // 보호자
 
     @Column(nullable = false)
     private String homeAddress;
+
+    private String fcmToken;
 
     @OneToOne
     private Location location;
