@@ -2,6 +2,7 @@ package com.musubi.domain.user.api;
 
 import com.musubi.domain.user.application.GuardianService;
 import com.musubi.domain.user.application.UserService;
+import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
@@ -33,5 +34,11 @@ public class GuardianController {
     ResponseEntity<?> login(@RequestBody @Valid GuardianLoginRequestDto guardianLoginRequestDto) {
         return ResponseEntity.status(200)
                 .body(new DefaultDataResponse<>(200, "로그인 성공", guardianService.loginDemo(guardianLoginRequestDto)));
+    }
+
+    @PostMapping("connection")
+    ResponseEntity<?> connection(@RequestBody @Valid ConnectionRequestDto connectionRequestDto) {
+        guardianService.connection(connectionRequestDto);
+        return ResponseEntity.status(200).body(new DefaultResponse(200, "연동 성공"));
     }
 }

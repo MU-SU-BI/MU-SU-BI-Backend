@@ -21,7 +21,8 @@ public class LocationController {
 
     @PostMapping("set")
     ResponseEntity<?> set(@RequestBody @Valid LocationCheckRequestDto locationCheckRequestDto) {
-        String tmp = locationService.checkLocation(locationCheckRequestDto);
-        return ResponseEntity.status(201).body(new DefaultDataResponse<>(201, "위치 확인 완료", tmp));
+        return ResponseEntity.status(201)
+                .body(new DefaultDataResponse<>(201, "위치 확인 완료", locationService.checkLocation(locationCheckRequestDto)))
+        ;
     }
 }

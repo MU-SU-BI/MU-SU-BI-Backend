@@ -59,8 +59,13 @@ public class User extends BaseEntity { // 보호자
     @OneToOne
     private Location location;
 
+    @OneToOne(mappedBy = "user")
+    private Guardian guardian;
+
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(this.password);
     }
+
+    public void connectGuardian(Guardian guardian) { this.guardian = guardian; }
 
 }
