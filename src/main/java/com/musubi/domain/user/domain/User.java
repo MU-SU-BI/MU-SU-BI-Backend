@@ -56,9 +56,6 @@ public class User extends BaseEntity { // 보호자
     @Column(nullable = false)
     private String homeAddress;
 
-    //@OneToOne
-    //@JoinColumn(name = "Location")
-    //private Location location;
 
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(this.password);

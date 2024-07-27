@@ -4,13 +4,6 @@ import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.location.dao.LocationRepository;
 import com.musubi.domain.location.dto.LocationCheckRequestDto;
 import com.musubi.domain.location.dto.LocationCheckResponseDto;
-import com.musubi.domain.location.process.LocationMaker;
-import com.musubi.domain.user.domain.User;
-import com.musubi.domain.user.dto.UserLoginRequestDto;
-import com.musubi.domain.user.dto.UserLoginResponseDto;
-import com.musubi.domain.user.exception.NotFoundUserException;
-import com.musubi.domain.user.exception.WrongPasswordException;
-import com.musubi.global.constants.ErrorMessage;
 import com.musubi.global.utils.NaverMapUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +22,6 @@ public class LocationService {
                 .build();
 
         locationRepository.save(location);
-        //return LocationMaker.makeDistrict(tmp);
         return LocationCheckResponseDto.fromEntity(location);
     }
 
