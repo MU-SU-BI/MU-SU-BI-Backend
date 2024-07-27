@@ -1,6 +1,7 @@
 package com.musubi.domain.user.domain;
 
 
+import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,6 +53,9 @@ public class Guardian extends BaseEntity { // 보호자
 
     @Column(nullable = false)
     private String homeAddress;
+
+    @OneToOne
+    private Location location;
 
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(password);
