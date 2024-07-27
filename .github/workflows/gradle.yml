@@ -30,6 +30,7 @@ jobs:
 
       - name: Set up application.yml
         run: |
+          mkdir ./src/main/resources
           cd ./src/main/resources
           touch ./application.yml
           echo "${{ secrets.APPLICATION }}" > ./application.yml
