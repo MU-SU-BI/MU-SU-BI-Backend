@@ -67,6 +67,10 @@ public class Guardian extends BaseEntity { // 보호자
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    public void updateFcmDeviceToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(password);
     }

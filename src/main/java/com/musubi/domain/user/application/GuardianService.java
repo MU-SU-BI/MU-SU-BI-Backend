@@ -50,10 +50,14 @@ public class GuardianService {
         guardianRepository.save(guardian);
     }
 
+
+    @Transactional
     public GuardianLoginResponseDto loginDemo(GuardianLoginRequestDto guardianLoginRequestDto) {
 
         Guardian guardian = guardianRepository.findByEmail(guardianLoginRequestDto.getEmail())
                 .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
+
+        guardian.updateFcmDeviceToken(guardianLoginRequestDto.getFcmToken());
 
         if (!guardian.validatePassword(guardianLoginRequestDto.getPassword())) {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
