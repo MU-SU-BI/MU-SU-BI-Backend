@@ -1,6 +1,7 @@
 package com.musubi.domain.user.domain;
 
 
+import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
@@ -63,6 +64,9 @@ public class User extends BaseEntity { // 보호자
     @OneToOne(mappedBy = "user")
     private Guardian guardian;
 
+    @OneToOne
+    private CurrentLocation currentLocation;
+
     public void updateFcmDeviceToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
@@ -77,6 +81,10 @@ public class User extends BaseEntity { // 보호자
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public void setCurrentLocation(CurrentLocation currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
 }

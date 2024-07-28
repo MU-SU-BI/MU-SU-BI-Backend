@@ -1,6 +1,7 @@
 package com.musubi.domain.user.domain;
 
 
+import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.type.SexType;
@@ -67,6 +68,9 @@ public class Guardian extends BaseEntity { // 보호자
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @OneToOne
+    private CurrentLocation currentLocation;
+
     public void updateFcmDeviceToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
@@ -82,5 +86,9 @@ public class Guardian extends BaseEntity { // 보호자
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public void setCurrentLocation(CurrentLocation currentLocation) {
+        this.currentLocation = currentLocation;
     }
 }
