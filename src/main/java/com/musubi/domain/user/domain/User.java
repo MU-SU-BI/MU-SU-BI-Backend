@@ -56,6 +56,8 @@ public class User extends BaseEntity { // 보호자
     @Column(nullable = false)
     private String homeAddress;
 
+    private String fcmToken;
+
     @OneToOne
     private Location location;
 
@@ -64,6 +66,10 @@ public class User extends BaseEntity { // 보호자
 
     @OneToOne
     private CurrentLocation currentLocation;
+
+    public void updateFcmDeviceToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
 
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(this.password);

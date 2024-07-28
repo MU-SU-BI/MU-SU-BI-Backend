@@ -71,6 +71,10 @@ public class Guardian extends BaseEntity { // 보호자
     @OneToOne
     private CurrentLocation currentLocation;
 
+    public void updateFcmDeviceToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
     public boolean validatePassword(String inputPassword) {
         return inputPassword.equals(password);
     }

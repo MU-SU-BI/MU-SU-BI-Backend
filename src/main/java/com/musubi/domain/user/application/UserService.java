@@ -12,6 +12,7 @@ import com.musubi.domain.user.exception.AlreadyExistPhoneNumberException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
 import com.musubi.global.constants.ErrorMessage;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +43,13 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     public UserLoginResponseDto loginDemo(UserLoginRequestDto userLoginRequestDto) {
 
         User user = userRepository.findByEmail(userLoginRequestDto.getEmail())
                 .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
+
+        user.updateFcmDeviceToken(userLoginRequestDto.getFcmToken());
 
         if (!user.validatePassword(userLoginRequestDto.getPassword())) {
             throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
