@@ -6,6 +6,7 @@ import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.dto.ConnectionRequestDto;
+import com.musubi.domain.user.dto.ConnectionResponseDto;
 import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginResponseDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
@@ -62,7 +63,7 @@ public class GuardianService {
     }
 
     @Transactional
-    public void connection(ConnectionRequestDto connectionRequestDto) {
+    public ConnectionResponseDto connection(ConnectionRequestDto connectionRequestDto) {
         User user = userRepository.findByNameAndPhoneNumber(connectionRequestDto.getDisabledName(),
                         connectionRequestDto.getDisabledPhoneNumber())
                 .orElseThrow(() -> new IllegalArgumentException("error"));
@@ -71,6 +72,7 @@ public class GuardianService {
                 .orElseThrow(() -> new IllegalArgumentException("error"));
 
         guardian.connectUser(user);
+        return ConnectionResponseDto.fromEntity(user);
     }
 
     private void checkDuplicateEmail(String inputEmail) {
