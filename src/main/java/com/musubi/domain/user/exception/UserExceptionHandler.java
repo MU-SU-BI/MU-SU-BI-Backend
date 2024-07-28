@@ -38,6 +38,18 @@ public class UserExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
+    @ExceptionHandler(NoneExistConnectException.class)
+    public ResponseEntity<?> noneExistConnectException(NoneExistConnectException ex) {
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatusCode(HttpStatus.BAD_REQUEST.value())
+                .errorMessage(ex.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+
     @ExceptionHandler(NotFoundUserException.class)
     public ResponseEntity<?> notFoundUserException(NotFoundUserException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()

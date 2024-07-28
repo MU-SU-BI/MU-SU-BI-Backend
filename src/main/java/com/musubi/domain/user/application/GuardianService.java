@@ -11,14 +11,15 @@ import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginResponseDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
 
+import com.musubi.domain.user.dto.UserResponseDto;
 import com.musubi.domain.user.exception.AlreadyExistEmailException;
 import com.musubi.domain.user.exception.AlreadyExistNicknameException;
 import com.musubi.domain.user.exception.AlreadyExistPhoneNumberException;
+import com.musubi.domain.user.exception.NoneExistConnectException;
 import com.musubi.domain.user.exception.NotFoundUserException;
 import com.musubi.domain.user.exception.WrongPasswordException;
 import com.musubi.global.constants.ErrorMessage;
 import jakarta.transaction.Transactional;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,15 @@ public class GuardianService {
         guardian.connectUser(user);
         return ConnectionResponseDto.fromEntity(user);
     }
+
+    public UserResponseDto findMyUserById(Long guardianId) { // user -> 뭘로 ?
+
+        User user = userRepository.findByGuardianId(guardianId)
+                .orElseThrow(() -> new NoneExistConnectException("아직 등록된 장애인이 없습니다."));
+
+        return UserResponseDto.fromEntity(user);
+    }
+
 
     private void checkDuplicateEmail(String inputEmail) {
         guardianRepository.findByEmail(inputEmail).ifPresent((user) -> {
