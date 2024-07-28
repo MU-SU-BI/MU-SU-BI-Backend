@@ -38,7 +38,7 @@ public class GuardianController {
 
     @PostMapping("connection")
     ResponseEntity<?> connection(@RequestBody @Valid ConnectionRequestDto connectionRequestDto) {
-        guardianService.connection(connectionRequestDto);
-        return ResponseEntity.status(200).body(new DefaultResponse(200, "연동 성공"));
+        return ResponseEntity.status(200)
+                .body(new DefaultDataResponse<>(200, "연동 성공", guardianService.connection(connectionRequestDto)));
     }
 }
