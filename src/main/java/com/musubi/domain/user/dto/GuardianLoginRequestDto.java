@@ -9,4 +9,5 @@ import lombok.Getter;
 public final class GuardianLoginRequestDto {
     private final String email;
     private final String password;
+    private final String fcmToken;
 }
