@@ -9,4 +9,3 @@ import lombok.Getter;
 public class FCMRequestDto {
     private Long userId;
 }
-

@@ -21,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LocationController {
     private final LocationService locationService;
 
-    @PostMapping("set")
-    ResponseEntity<?> set(@RequestBody @Valid LocationCheckRequestDto locationCheckRequestDto, @RequestParam String type) {
+    @PostMapping
+    ResponseEntity<?> set(@RequestBody @Valid LocationCheckRequestDto locationCheckRequestDto,
+                          @RequestParam String type) {
         return ResponseEntity.status(201)
-                .body(new DefaultDataResponse<>(201, "위치 확인 완료", locationService.checkLocation(locationCheckRequestDto, type)))
-        ;
+                .body(new DefaultDataResponse<>(201, "위치 확인 완료",
+                        locationService.checkLocation(locationCheckRequestDto, type)));
     }
 }

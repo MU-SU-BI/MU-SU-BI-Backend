@@ -33,4 +33,5 @@ public class Location extends BaseEntity {
 
     @Column(nullable = false)
     private String district; // 읍,면,동 기준 분류
+
 }
