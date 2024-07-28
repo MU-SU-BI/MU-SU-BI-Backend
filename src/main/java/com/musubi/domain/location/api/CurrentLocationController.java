@@ -7,6 +7,8 @@ import com.musubi.global.utils.DefaultResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,15 @@ public class CurrentLocationController {
     private final CurrentLocationService currentLocationService;
 
     @PutMapping
-    ResponseEntity<?> now(@RequestBody @Valid CurrentLocationRequestDto currentLocationRequestDto, @RequestParam String type) {
+    ResponseEntity<?> now(@RequestBody @Valid CurrentLocationRequestDto currentLocationRequestDto,
+                          @RequestParam String type) {
         currentLocationService.updateLocation(currentLocationRequestDto, type);
         return ResponseEntity.ok().body(new DefaultResponse(200, "전송 성공"));
+    }
+
+    @GetMapping("{userId}")
+    ResponseEntity<?> findCurrentLocation(@PathVariable Long userId) {
+        return ResponseEntity.ok()
+                .body(new DefaultDataResponse<>(200, "위치 확인 완료", currentLocationService.checkCurrentLocation(userId)));
     }
 }

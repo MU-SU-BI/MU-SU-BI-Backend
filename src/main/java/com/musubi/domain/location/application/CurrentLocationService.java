@@ -5,6 +5,7 @@ import com.musubi.domain.location.dao.LocationRepository;
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.location.dto.CurrentLocationRequestDto;
+import com.musubi.domain.location.dto.CurrentLocationResponseDto;
 import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
@@ -25,7 +26,7 @@ public class CurrentLocationService {
     public void updateLocation(CurrentLocationRequestDto currentLocationRequestDto, String type) {
         if (type.equals("user")) {
             User user = userRepository.findById(currentLocationRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException());
+                    .orElseThrow(() -> new IllegalArgumentException("Error"));
 
             if (user.getCurrentLocation() == null) {
                 CurrentLocation currentLocation = CurrentLocation.builder()
@@ -40,7 +41,7 @@ public class CurrentLocationService {
             }
         } else if (type.equals("guardian")) {
             Guardian guardian = guardianRepository.findById(currentLocationRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException());
+                    .orElseThrow(() -> new IllegalArgumentException("Error"));
 
             if (guardian.getCurrentLocation() == null) {
                 CurrentLocation currentLocation = CurrentLocation.builder()
@@ -55,4 +56,14 @@ public class CurrentLocationService {
             }
         }
     }
+
+    public CurrentLocationResponseDto checkCurrentLocation(Long userId) {
+        User user = guardianRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Error"))
+                .getUser();
+        if (user == null) {
+            throw new IllegalArgumentException("Error");
+        }
+        return CurrentLocationResponseDto.fromEntity(user);
+    }
+
 }
