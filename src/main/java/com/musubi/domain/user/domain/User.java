@@ -3,6 +3,7 @@ package com.musubi.domain.user.domain;
 
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
+import com.musubi.domain.location.domain.SafeArea;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
 import jakarta.persistence.Column;
@@ -12,8 +13,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -66,6 +70,9 @@ public class User extends BaseEntity { // 보호자
 
     @OneToOne
     private CurrentLocation currentLocation;
+
+    @OneToMany(mappedBy = "user")
+    private List<SafeArea> safeAreas = new ArrayList<>();
 
     public void updateFcmDeviceToken(String fcmToken) {
         this.fcmToken = fcmToken;
