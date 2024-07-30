@@ -33,10 +33,6 @@ public class SafeAreaController {
 
     @GetMapping("{userId}")
     ResponseEntity<?> findSafeArea(@PathVariable Long userId) {
-        List<SafeArea> safeAreas = safeAreaService.findSafeAreas(userId);
-        List<SafeAreaResponseDto> collect = safeAreas.stream()
-                .map(m -> new SafeAreaResponseDto(m.getLongitude(), m.getLatitude(), m.getRadius()))
-                .collect(Collectors.toList());
-        return ResponseEntity.ok().body(new DefaultDataResponse<>(200, "전송 완료", collect));
+        return ResponseEntity.ok().body(new DefaultDataResponse<>(200, "전송 완료", safeAreaService.findSafeAreas(userId)));
     }
 }
