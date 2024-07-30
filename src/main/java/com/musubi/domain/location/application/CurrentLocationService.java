@@ -10,9 +10,11 @@ import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
+import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +28,7 @@ public class CurrentLocationService {
     public void updateLocation(CurrentLocationRequestDto currentLocationRequestDto, String type) {
         if (type.equals("user")) {
             User user = userRepository.findById(currentLocationRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException("Error"));
+                    .orElseThrow(() -> new BusinessLogicException("올바른 User가 아닙니다.", HttpStatus.BAD_REQUEST.value()));
 
             if (user.getCurrentLocation() == null) {
                 CurrentLocation currentLocation = CurrentLocation.builder()
@@ -41,7 +43,7 @@ public class CurrentLocationService {
             }
         } else if (type.equals("guardian")) {
             Guardian guardian = guardianRepository.findById(currentLocationRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException("Error"));
+                    .orElseThrow(() -> new BusinessLogicException("올바른 보호자가 아닙니다.", HttpStatus.BAD_REQUEST.value()));
 
             if (guardian.getCurrentLocation() == null) {
                 CurrentLocation currentLocation = CurrentLocation.builder()
@@ -57,13 +59,17 @@ public class CurrentLocationService {
         }
     }
 
-    public CurrentLocationResponseDto checkCurrentLocation(Long userId) {
-        User user = guardianRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Error"))
+    public CurrentLocationResponseDto checkCurrentLocation(Long guardianId) {
+        User user = guardianRepository.findById(guardianId).orElseThrow(() -> new IllegalArgumentException("Error"))
                 .getUser();
         if (user == null) {
             throw new IllegalArgumentException("Error");
         }
         return CurrentLocationResponseDto.fromEntity(user);
     }
+
+    public void test(Long userId) {
+    }
+
 
 }

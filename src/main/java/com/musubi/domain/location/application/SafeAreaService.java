@@ -8,10 +8,12 @@ import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
+import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,14 +21,11 @@ import org.springframework.stereotype.Service;
 public class SafeAreaService {
     private final SafeAreaRepository safeAreaRepository;
     private final UserRepository userRepository;
-    private final GuardianRepository guardianRepository;
 
     public void updateSafeArea(SafeAreaRequestDto safeAreaRequestDto) {
-        Guardian guardian = guardianRepository.findById(safeAreaRequestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("Error"));
 
-        User user = userRepository.findById(guardian.getUser().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Error"));
+        User user = userRepository.findByGuardianId(safeAreaRequestDto.getUserId())
+                .orElseThrow(() -> new BusinessLogicException("올바른 보호자 ID가 아닙니다.", HttpStatus.BAD_REQUEST.value()));
 
         SafeArea safeArea = SafeArea.builder()
                 .latitude(safeAreaRequestDto.getLatitude())
@@ -38,12 +37,10 @@ public class SafeAreaService {
         safeAreaRepository.save(safeArea);
     }
 
-    public List<SafeAreaResponseDto> findSafeAreas(Long userId) {
-        Guardian guardian = guardianRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Error"));
+    public List<SafeAreaResponseDto> findSafeAreas(Long guardianId) {
 
-        User user = userRepository.findById(guardian.getUser().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Error"));
+        User user = userRepository.findByGuardianId(guardianId)
+                .orElseThrow(() -> new BusinessLogicException("올바른 보호자 ID가 아닙니다.", HttpStatus.BAD_REQUEST.value()));
 
         return user.getSafeAreas().stream()
                 .map(m -> new SafeAreaResponseDto(m.getLongitude(), m.getLatitude(), m.getRadius()))

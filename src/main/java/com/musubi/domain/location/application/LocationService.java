@@ -9,9 +9,11 @@ import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.type.UserType;
+import com.musubi.global.exception.BusinessLogicException;
 import com.musubi.global.utils.NaverMapUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,14 +37,14 @@ public class LocationService {
 
         if (type.equals(UserType.USER.getValue())) {
             User user = userRepository.findById(locationCheckRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException("Error"));
+                    .orElseThrow(() -> new BusinessLogicException("올바른 USER ID가 아닙니다", HttpStatus.BAD_REQUEST.value()));
             user.setLocation(location);
         } else if (type.equals(UserType.GUARDIAN.getValue())) {
             Guardian guardian = guardianRepository.findById(locationCheckRequestDto.getUserId())
-                    .orElseThrow(() -> new IllegalArgumentException("Error"));
+                    .orElseThrow(() -> new BusinessLogicException("올바른 보호자 ID가 아닙니다.", HttpStatus.BAD_REQUEST.value()));
             guardian.setLocation(location);
         } else {
-            throw new IllegalArgumentException("Error");
+            throw new BusinessLogicException("올바른 요청이 아닙니다.", HttpStatus.BAD_REQUEST.value());
         }
 
         return LocationCheckResponseDto.fromEntity(location);

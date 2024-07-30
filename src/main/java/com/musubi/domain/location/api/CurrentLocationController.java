@@ -29,9 +29,9 @@ public class CurrentLocationController {
         return ResponseEntity.ok().body(new DefaultResponse(200, "전송 성공"));
     }
 
-    @GetMapping("{userId}")
-    ResponseEntity<?> findCurrentLocation(@PathVariable Long userId) {
+    @GetMapping("{guardianId}")
+    ResponseEntity<?> findCurrentLocation(@PathVariable Long guardianId) {
         return ResponseEntity.ok()
-                .body(new DefaultDataResponse<>(200, "위치 확인 완료", currentLocationService.checkCurrentLocation(userId)));
+                .body(new DefaultDataResponse<>(200, "위치 확인 완료", currentLocationService.checkCurrentLocation(guardianId)));
     }
 }
