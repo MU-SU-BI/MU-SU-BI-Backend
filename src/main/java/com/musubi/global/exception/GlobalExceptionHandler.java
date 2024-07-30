@@ -21,4 +21,15 @@ public class GlobalExceptionHandler { //TODO : package 위치 이동 필요함
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
+
+    @ExceptionHandler(BusinessLogicException.class)
+    public ResponseEntity<?> businessLogicExceptionHandler(BusinessLogicException ex) {
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .httpStatusCode(ex.getStatus())
+                .errorMessage(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(ex.getStatus()));
+    }
 }
