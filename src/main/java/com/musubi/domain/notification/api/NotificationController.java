@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/guardians")
+@RequestMapping("api/v1/guardians") // guardians -> users 로 나중에 변경 해야할듯
 public class NotificationController {
     private final NotificationService notificationService;
     @PostMapping("help") // url 나중에 변경
