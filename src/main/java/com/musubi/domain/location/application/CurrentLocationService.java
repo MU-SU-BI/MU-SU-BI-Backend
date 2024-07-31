@@ -60,16 +60,9 @@ public class CurrentLocationService {
     }
 
     public CurrentLocationResponseDto checkCurrentLocation(Long guardianId) {
-        User user = guardianRepository.findById(guardianId).orElseThrow(() -> new IllegalArgumentException("Error"))
-                .getUser();
-        if (user == null) {
-            throw new IllegalArgumentException("Error");
-        }
+        User user = userRepository.findByGuardianId(guardianId)
+                .orElseThrow(() -> new BusinessLogicException("연동된 유저가 없습니다.", HttpStatus.BAD_REQUEST.value()));
+
         return CurrentLocationResponseDto.fromEntity(user);
     }
-
-    public void test(Long userId) {
-    }
-
-
 }
