@@ -12,15 +12,10 @@ import com.musubi.domain.user.dto.GuardianLoginResponseDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
 
 import com.musubi.domain.user.dto.UserResponseDto;
-import com.musubi.domain.user.exception.AlreadyExistEmailException;
-import com.musubi.domain.user.exception.AlreadyExistNicknameException;
-import com.musubi.domain.user.exception.AlreadyExistPhoneNumberException;
-import com.musubi.domain.user.exception.NoneExistConnectException;
-import com.musubi.domain.user.exception.NotFoundUserException;
-import com.musubi.domain.user.exception.WrongPasswordException;
-import com.musubi.global.constants.ErrorMessage;
+import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -56,12 +51,12 @@ public class GuardianService {
     public GuardianLoginResponseDto loginDemo(GuardianLoginRequestDto guardianLoginRequestDto) {
 
         Guardian guardian = guardianRepository.findByEmail(guardianLoginRequestDto.getEmail())
-                .orElseThrow(() -> new NotFoundUserException(ErrorMessage.NOT_FOUND_USER_ERROR.getErrorMessage()));
+                .orElseThrow(() -> new BusinessLogicException("존재하지 않는 이메일 입니다.", HttpStatus.UNAUTHORIZED.value()));
 
         guardian.updateFcmDeviceToken(guardianLoginRequestDto.getFcmToken());
 
         if (!guardian.validatePassword(guardianLoginRequestDto.getPassword())) {
-            throw new WrongPasswordException(ErrorMessage.WRONG_PASSWORD_ERROR.getErrorMessage());
+            throw new BusinessLogicException("옳지않은 비밀번호 입니다.", HttpStatus.UNAUTHORIZED.value());
         }
 
         return GuardianLoginResponseDto.fromEntity(guardian);
@@ -71,19 +66,19 @@ public class GuardianService {
     public ConnectionResponseDto connection(ConnectionRequestDto connectionRequestDto) {
         User user = userRepository.findByNameAndPhoneNumber(connectionRequestDto.getDisabledName(),
                         connectionRequestDto.getDisabledPhoneNumber())
-                .orElseThrow(() -> new IllegalArgumentException("error"));
+                .orElseThrow(() -> new BusinessLogicException("해당 하는 User가 존재하지 않습니다", HttpStatus.BAD_REQUEST.value()));
 
         Guardian guardian = guardianRepository.findById(connectionRequestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("error"));
+                .orElseThrow(() -> new BusinessLogicException("존재 하지 않은 보호자 입니다.", HttpStatus.BAD_REQUEST.value()));
 
         guardian.connectUser(user);
         return ConnectionResponseDto.fromEntity(user);
     }
 
-    public UserResponseDto findMyUserById(Long guardianId) { // user -> 뭘로 ?
+    public UserResponseDto findMyUserById(Long guardianId) {
 
         User user = userRepository.findByGuardianId(guardianId)
-                .orElseThrow(() -> new NoneExistConnectException("아직 등록된 장애인이 없습니다."));
+                .orElseThrow(() -> new BusinessLogicException("아직 등록된 장애인이 없습니다.", HttpStatus.BAD_REQUEST.value()));
 
         return UserResponseDto.fromEntity(user);
     }
@@ -91,19 +86,19 @@ public class GuardianService {
 
     private void checkDuplicateEmail(String inputEmail) {
         guardianRepository.findByEmail(inputEmail).ifPresent((user) -> {
-            throw new AlreadyExistEmailException(ErrorMessage.ALREADY_EXIST_EMAIL_ERROR.getErrorMessage());
+            throw new BusinessLogicException("이미 존재하는 이메일 입니다.", HttpStatus.BAD_REQUEST.value());
         });
     }
 
     private void checkDuplicateNickname(String inputNickname) {
         guardianRepository.findByNickname(inputNickname).ifPresent((user) -> {
-            throw new AlreadyExistNicknameException(ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR.getErrorMessage());
+            throw new BusinessLogicException("이미 존재하는 닉네임 입니다.", HttpStatus.BAD_REQUEST.value());
         });
     }
 
     private void checkDuplicatePhoneNumber(String inputPhoneNumber) {
         guardianRepository.findByPhoneNumber(inputPhoneNumber).ifPresent((user) -> {
-            throw new AlreadyExistPhoneNumberException(ErrorMessage.ALREADY_EXIST_PHONE_NUMBER_ERROR.getErrorMessage());
+            throw new BusinessLogicException("이미 존재하는 휴대폰 번호 입니다.", HttpStatus.BAD_REQUEST.value());
         });
     }
 }

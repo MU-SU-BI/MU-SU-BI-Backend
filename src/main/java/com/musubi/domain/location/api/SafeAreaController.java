@@ -31,8 +31,9 @@ public class SafeAreaController {
         return ResponseEntity.ok().body(new DefaultResponse(200, "안전구역 설정 성공"));
     }
 
-    @GetMapping("{userId}")
-    ResponseEntity<?> findSafeArea(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(new DefaultDataResponse<>(200, "전송 완료", safeAreaService.findSafeAreas(userId)));
+    @GetMapping("{guardianId}")
+    ResponseEntity<?> findSafeArea(@PathVariable Long guardianId) {
+        return ResponseEntity.ok()
+                .body(new DefaultDataResponse<>(200, "전송 완료", safeAreaService.findSafeAreas(guardianId)));
     }
 }
