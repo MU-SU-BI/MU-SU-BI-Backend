@@ -30,8 +30,8 @@ public class NaverMapUtil {
 
     public static String districtParser(String coordinate) {
         URI uri = UriComponentsBuilder
-                .fromUriString("https://naveropenapi.apigw.ntruss.com")
-                .path("/map-reversegeocode/v2/gc")
+                .fromUriString(URL)
+                .path(PATH)
                 .queryParam("coords", coordinate)
                 .queryParam("output", "json")
                 .encode()
@@ -40,11 +40,10 @@ public class NaverMapUtil {
 
         RequestEntity<Void> request = RequestEntity
                 .get(uri)
-                .header("X-NCP-APIGW-API-KEY-ID", "2i3lonwpk6")
-                .header("X-NCP-APIGW-API-KEY", "lQcbg33Z2fVhNAs2uVFRLN9Ebxa0zEcD0nzOV3ec")
+                .header("X-NCP-APIGW-API-KEY-ID", ID)
+                .header("X-NCP-APIGW-API-KEY", KEY)
                 .build();
 
-        System.out.println(request.getHeaders());
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(request, String.class);
