@@ -3,7 +3,6 @@ package com.musubi.global.utils.dto;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -12,4 +11,5 @@ import lombok.NoArgsConstructor;
 public class NaverMapResponseJsonDto {
     Status status;
     List<NaverMapResponseDto> results;
+
 }

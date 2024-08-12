@@ -1,9 +1,7 @@
 package com.musubi.domain.location.application;
 
 import com.musubi.domain.location.dao.CurrentLocationRepository;
-import com.musubi.domain.location.dao.LocationRepository;
 import com.musubi.domain.location.domain.CurrentLocation;
-import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.location.dto.CurrentLocationRequestDto;
 import com.musubi.domain.location.dto.CurrentLocationResponseDto;
 import com.musubi.domain.user.dao.GuardianRepository;
@@ -12,7 +10,6 @@ import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
 import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

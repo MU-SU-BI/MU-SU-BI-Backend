@@ -1,16 +1,12 @@
 package com.musubi.domain.user.api;
 
 import com.musubi.domain.user.application.GuardianService;
-import com.musubi.domain.user.application.UserService;
 import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
-import com.musubi.domain.user.dto.UserLoginRequestDto;
-import com.musubi.domain.user.dto.UserSignUpRequestDto;
 import com.musubi.global.utils.DefaultDataResponse;
 import com.musubi.global.utils.DefaultResponse;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

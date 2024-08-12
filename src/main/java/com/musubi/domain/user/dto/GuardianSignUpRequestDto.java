@@ -1,7 +1,6 @@
 package com.musubi.domain.user.dto;
 
 import com.musubi.domain.user.type.SexType;
-import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

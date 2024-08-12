@@ -1,6 +1,5 @@
 package com.musubi.domain.user.type;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
