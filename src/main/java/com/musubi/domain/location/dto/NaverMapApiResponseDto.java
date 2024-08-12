@@ -1,4 +1,4 @@
-package com.musubi.global.utils.dto;
+package com.musubi.domain.location.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RefactorNaverMapResponseDto {
+public class NaverMapApiResponseDto {
 
     private Status status;
     private List<Result> results;
@@ -75,7 +75,7 @@ public class RefactorNaverMapResponseDto {
                 @Getter
                 @NoArgsConstructor
                 @AllArgsConstructor
-                static class coords {
+                static class Coords {
                     private Center center;
 
 

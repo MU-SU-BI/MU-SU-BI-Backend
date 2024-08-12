@@ -1,9 +1,9 @@
-package com.musubi.global.utils;
+package com.musubi.domain.location.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.musubi.domain.location.dto.NaverMapApiResponseDto;
 import com.musubi.global.exception.BusinessLogicException;
-import com.musubi.global.utils.dto.RefactorNaverMapResponseDto;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class NaverMapApiService {
     @Value("${naver.url.search.reverse}")
     private String URL;
 
-    public String districtParser(String coordinate) {
+    public String parse(String coordinate) {
         URI uri = UriComponentsBuilder
                 .fromUriString(URL)
                 .path(PATH)
@@ -48,15 +48,15 @@ public class NaverMapApiService {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        RefactorNaverMapResponseDto refactorNaverMapResponseDto;
+        NaverMapApiResponseDto naverMapAPIResponseDto;
 
         try {
-            refactorNaverMapResponseDto = objectMapper.readValue(response.getBody(), RefactorNaverMapResponseDto.class);
+            naverMapAPIResponseDto = objectMapper.readValue(response.getBody(), NaverMapApiResponseDto.class);
         } catch (JsonProcessingException e) {
             throw new BusinessLogicException("Naver Map API 요청에 실패 했습니다.", HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
 
-        return refactorNaverMapResponseDto.getDistrict();
+        return naverMapAPIResponseDto.getDistrict();
     }
 }
 

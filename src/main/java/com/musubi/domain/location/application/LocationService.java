@@ -10,7 +10,6 @@ import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.type.UserType;
 import com.musubi.global.exception.BusinessLogicException;
-import com.musubi.global.utils.NaverMapApiService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,7 @@ public class LocationService {
 
         Location location = Location.builder()
                 .coordinate(locationCheckRequestDto.getCoordinate())
-                .district(naverMapApiService.districtParser(locationCheckRequestDto.getCoordinate()))
+                .district(naverMapApiService.parse(locationCheckRequestDto.getCoordinate()))
                 .build();
 
         locationRepository.save(location);
