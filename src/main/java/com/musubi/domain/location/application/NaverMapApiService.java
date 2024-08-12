@@ -27,7 +27,7 @@ public class NaverMapApiService {
     @Value("${naver.url.search.reverse}")
     private String URL;
 
-    public String parse(String coordinate) {
+    public String coordinateToDistrict(String coordinate) {
         URI uri = UriComponentsBuilder
                 .fromUriString(URL)
                 .path(PATH)

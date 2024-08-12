@@ -30,7 +30,7 @@ public class LocationService {
 
         Location location = Location.builder()
                 .coordinate(locationCheckRequestDto.getCoordinate())
-                .district(naverMapApiService.parse(locationCheckRequestDto.getCoordinate()))
+                .district(naverMapApiService.coordinateToDistrict(locationCheckRequestDto.getCoordinate()))
                 .build();
 
         locationRepository.save(location);
