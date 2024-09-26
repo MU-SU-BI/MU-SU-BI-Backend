@@ -33,7 +33,7 @@ jobs:
           mkdir ./src/main/resources
           cd ./src/main/resources
           touch ./application.yml
-          echo "${{ secrets.APPLICATION }}" > ./application.yml
+          echo "${{ secrets.APPLICATION }}" | base64 --decode > ./application.yml
           touch ./application-dev.yml
           echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml
           touch ./application-prod.yml
