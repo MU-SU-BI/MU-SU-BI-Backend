@@ -1,10 +1,10 @@
 package com.musubi.domain.user.domain;
 
-
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.type.SexType;
 import com.musubi.global.utils.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,65 +26,69 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Guardian extends BaseEntity { // 보호자
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+	@Column(nullable = false, unique = true)
+	private String email;
 
-    @Column(nullable = false)
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column(nullable = false)
-    private int age;
+	private String provider;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private SexType sex;
+	private String providerId;
 
-    @Column(nullable = false, unique = true)
-    private String nickname;
+	@Column(nullable = false)
+	private int age;
 
-    @Column(nullable = false, unique = true)
-    private String phoneNumber;
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private SexType sex;
 
-    @Column(nullable = false)
-    private String homeAddress;
+	@Column(nullable = false, unique = true)
+	private String nickname;
 
-    private String fcmToken;
+	@Column(nullable = false, unique = true)
+	private String phoneNumber;
 
-    @OneToOne
-    private Location location;
+	@Column(nullable = false)
+	private String homeAddress;
 
-    @OneToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+	private String fcmToken;
 
-    @OneToOne
-    private CurrentLocation currentLocation;
+	@OneToOne
+	private Location location;
 
-    public void updateFcmDeviceToken(String fcmToken) {
-        this.fcmToken = fcmToken;
-    }
+	@OneToOne
+	@JoinColumn(name = "USER_ID")
+	private User user;
 
-    public boolean validatePassword(String inputPassword) {
-        return inputPassword.equals(password);
-    }
+	@OneToOne
+	private CurrentLocation currentLocation;
 
-    public void connectUser(User user) {
-        this.user = user;
-        user.connectGuardian(this);
-    }
+	public void updateFcmDeviceToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+	public boolean validatePassword(String inputPassword) {
+		return inputPassword.equals(password);
+	}
 
-    public void setCurrentLocation(CurrentLocation currentLocation) {
-        this.currentLocation = currentLocation;
-    }
+	public void connectUser(User user) {
+		this.user = user;
+		user.connectGuardian(this);
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public void setCurrentLocation(CurrentLocation currentLocation) {
+		this.currentLocation = currentLocation;
+	}
 }
