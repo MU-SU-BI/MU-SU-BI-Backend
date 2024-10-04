@@ -1,5 +1,8 @@
 package com.musubi.domain.user.domain;
 
+import java.util.List;
+
+import com.musubi.domain.community.domain.Post;
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.type.SexType;
@@ -13,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,9 +68,23 @@ public class Guardian extends BaseEntity { // 보호자
 	@OneToOne
 	private Location location;
 
+	public boolean notHasLocation() {
+		return location == null;
+	}
+
+	public String getLocationDistrict() {
+		if (location == null) {
+			return null;
+		}
+		return location.getDistrict();
+	}
+
 	@OneToOne
 	@JoinColumn(name = "USER_ID")
 	private User user;
+
+	@OneToMany(mappedBy = "guardianAuthor")
+	private List<Post> posts;
 
 	@OneToOne
 	private CurrentLocation currentLocation;
