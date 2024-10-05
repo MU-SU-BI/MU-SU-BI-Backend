@@ -2,6 +2,7 @@ package com.musubi.domain.community.domain;
 
 import java.util.List;
 
+import com.musubi.domain.community.dao.CommentRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.global.utils.BaseEntity;
 
@@ -35,4 +36,8 @@ public class Post extends BaseEntity {
 
 	@ManyToOne
 	private Guardian guardianAuthor;
+
+	public void addNewComment(Comment comment) {
+		this.comments.add(comment);
+	}
 }

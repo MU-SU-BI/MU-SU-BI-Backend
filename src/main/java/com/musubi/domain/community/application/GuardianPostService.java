@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.musubi.domain.community.dao.PostRepository;
 import com.musubi.domain.community.domain.Post;
 import com.musubi.domain.community.dto.GuardianPostCreateDto;
+import com.musubi.domain.community.dto.PostDetailResponseDto;
 import com.musubi.domain.community.dto.PostResponseDto;
 import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.domain.Guardian;
@@ -54,7 +55,7 @@ public class GuardianPostService {
 		return posts.stream().map(PostResponseDto::of).toList();
 	}
 
-	public PostResponseDto findPostByPostId(Long postId, Long guardianId) {
+	public PostDetailResponseDto findPostByPostId(Long postId, Long guardianId) {
 		Guardian guardian = guardianRepository.findById(guardianId)
 			.orElseThrow(() -> new BusinessLogicException("올바르지 않은 Guardian ID 입니다.", HttpStatus.BAD_REQUEST.value()));
 
@@ -65,6 +66,6 @@ public class GuardianPostService {
 		Post post = postRepository.findById(postId)
 			.orElseThrow(() -> new BusinessLogicException("올바르지 않은 Post ID 입니다.", HttpStatus.BAD_REQUEST.value()));
 
-		return PostResponseDto.of(post);
+		return PostDetailResponseDto.of(post);
 	}
 }

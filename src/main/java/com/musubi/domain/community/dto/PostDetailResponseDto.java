@@ -7,23 +7,22 @@ import lombok.Builder;
 import lombok.Getter;
 
 @AllArgsConstructor
-@Builder
 @Getter
-public class PostResponseDto {
-	private Long postId;
+@Builder
+public final class PostDetailResponseDto {
+	private final Long postId;
 	private final String title;
+	private final String content;
 	private final String authorName;
 	private final String createAt;
-	private final int commentsCount;
 
-	public static PostResponseDto of(Post post) {
-		return PostResponseDto.builder()
+	public static PostDetailResponseDto of(Post post) {
+		return PostDetailResponseDto.builder()
 			.postId(post.getId())
 			.title(post.getTitle())
-			.authorName(post.getGuardianAuthor().getNickname())
-			.commentsCount(post.getComments().size())
+			.content(post.getContent())
 			.createAt(post.getCreatedAt().toString())
+			.authorName(post.getGuardianAuthor().getNickname())
 			.build();
 	}
-
 }
