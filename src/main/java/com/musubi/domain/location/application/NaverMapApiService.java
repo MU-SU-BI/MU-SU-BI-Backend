@@ -43,6 +43,8 @@ public class NaverMapApiService {
                 .header("X-NCP-APIGW-API-KEY", KEY)
                 .build();
 
+        System.out.println(KEY);
+
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(request, String.class);
 
