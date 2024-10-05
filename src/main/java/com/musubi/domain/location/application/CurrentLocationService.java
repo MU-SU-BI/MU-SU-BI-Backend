@@ -1,6 +1,7 @@
 package com.musubi.domain.location.application;
 
 import com.musubi.domain.location.dao.CurrentLocationRepository;
+import com.musubi.domain.location.dao.SafeAreaRepository;
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.location.domain.SafeArea;
@@ -13,8 +14,13 @@ import com.musubi.domain.user.domain.User;
 import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.hv.ParameterScriptAssertValidator;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Point;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +28,7 @@ public class CurrentLocationService {
     private final CurrentLocationRepository currentLocationRepository;
     private final UserRepository userRepository;
     private final GuardianRepository guardianRepository;
+    private final SafeAreaRepository safeAreaRepository;
 
     @Transactional
     public void updateLocation(CurrentLocationRequestDto currentLocationRequestDto, String type) {
@@ -39,6 +46,11 @@ public class CurrentLocationService {
             } else {
                 user.getCurrentLocation().updateCoordinate(currentLocationRequestDto.getLatitude(),
                         currentLocationRequestDto.getLongitude());
+            }
+            if (!user.getSafeAreas().isEmpty()) {
+                Integer count = safeAreaRepository.calculateDistance(user, currentLocationRequestDto.getLatitude(), currentLocationRequestDto.getLongitude());
+                if (count == 0)
+                    System.out.println("out");//push알람 위치
             }
         } else if (type.equals("guardian")) {
             Guardian guardian = guardianRepository.findById(currentLocationRequestDto.getUserId())

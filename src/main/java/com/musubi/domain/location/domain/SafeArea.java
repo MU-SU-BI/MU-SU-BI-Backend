@@ -37,13 +37,11 @@ public class SafeArea {
     @Column(nullable = false)
     private Double radius; // 반경
 
+    @Column(columnDefinition = "geometry(Point, 4326)")
+    private Point center;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
-
-    public Point getPoint(Double latitude, Double longitude) {
-        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
-        return geometryFactory.createPoint(new Coordinate(latitude, longitude));
-    }
 
 }
