@@ -8,6 +8,7 @@ import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
+import com.musubi.domain.user.type.UserType;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;

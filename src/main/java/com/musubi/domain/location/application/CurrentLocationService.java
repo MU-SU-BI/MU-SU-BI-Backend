@@ -4,6 +4,7 @@ import com.musubi.domain.location.dao.CurrentLocationRepository;
 import com.musubi.domain.location.dao.LocationRepository;
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
+import com.musubi.domain.location.domain.SafeArea;
 import com.musubi.domain.location.dto.CurrentLocationRequestDto;
 import com.musubi.domain.location.dto.CurrentLocationResponseDto;
 import com.musubi.domain.user.dao.GuardianRepository;
@@ -39,6 +40,11 @@ public class CurrentLocationService {
                 user.getCurrentLocation().updateCoordinate(currentLocationRequestDto.getLatitude(),
                         currentLocationRequestDto.getLongitude());
             }
+            //if (!user.getSafeAreas().isEmpty()) {
+            //    for (SafeArea safeArea : user.getSafeAreas()) {
+
+            //    }
+            //}
         } else if (type.equals("guardian")) {
             Guardian guardian = guardianRepository.findById(currentLocationRequestDto.getUserId())
                     .orElseThrow(() -> new IllegalArgumentException("Error"));
