@@ -6,16 +6,18 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.musubi.domain.notification.dto.HelpRequestDto;
 import com.musubi.domain.notification.type.FCMValue;
-import com.musubi.domain.user.dao.UserRepository;
+import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.domain.Guardian;
+import com.musubi.global.exception.BusinessLogicException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
     private final FirebaseMessaging firebaseMessaging;
-    private final UserRepository userRepository;
+    private final GuardianRepository guardianRepository;
 
     public void sendEmergencyMessageToGuardian() {
 
@@ -23,8 +25,8 @@ public class NotificationService {
 
     public void sendHelpNotification(HelpRequestDto helpRequestDto) throws FirebaseMessagingException {
 
-        Guardian guardian = userRepository.findById(helpRequestDto.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("")).getGuardian();
+        Guardian guardian = guardianRepository.findByUserId(helpRequestDto.getUserId()).orElseThrow(
+                () -> new BusinessLogicException("존재하지 않는 보호자 입니다.", HttpStatus.NOT_FOUND.value()));
 
         Notification notification = Notification.builder()
                 .setTitle(FCMValue.HELP.getTitle())
@@ -38,5 +40,4 @@ public class NotificationService {
 
         firebaseMessaging.send(message);
     }
-
 }

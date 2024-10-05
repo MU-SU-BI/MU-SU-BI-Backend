@@ -1,6 +1,5 @@
 package com.musubi.domain.user.dto;
 
-import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.type.SexType;
 import lombok.AllArgsConstructor;

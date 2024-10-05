@@ -2,7 +2,6 @@ package com.musubi.domain.user.dto;
 
 
 import com.musubi.domain.user.domain.Guardian;
-import com.musubi.domain.user.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 

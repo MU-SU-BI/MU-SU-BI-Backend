@@ -60,6 +60,10 @@ public class User extends BaseEntity { // 보호자
     @Column(nullable = false)
     private String homeAddress;
 
+    private String provider;
+
+    private String providerId;
+
     private String fcmToken;
 
     @OneToOne

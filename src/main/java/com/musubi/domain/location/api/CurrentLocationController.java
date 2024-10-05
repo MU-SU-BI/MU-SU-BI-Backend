@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +28,9 @@ public class CurrentLocationController {
         return ResponseEntity.ok().body(new DefaultResponse(200, "전송 성공"));
     }
 
-    @GetMapping("{userId}")
-    ResponseEntity<?> findCurrentLocation(@PathVariable Long userId) {
+    @GetMapping("{guardianId}")
+    ResponseEntity<?> findCurrentLocation(@PathVariable Long guardianId) {
         return ResponseEntity.ok()
-                .body(new DefaultDataResponse<>(200, "위치 확인 완료", currentLocationService.checkCurrentLocation(userId)));
+                .body(new DefaultDataResponse<>(200, "위치 확인 완료", currentLocationService.checkCurrentLocation(guardianId)));
     }
 }
