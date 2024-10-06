@@ -16,17 +16,21 @@ import com.musubi.domain.user.domain.User;
 import com.musubi.global.exception.BusinessLogicException;
 
 import jakarta.transaction.Transactional;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 
 import org.hibernate.validator.internal.constraintvalidators.hv.ParameterScriptAssertValidator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Point;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CurrentLocationService {
 	private final CurrentLocationRepository currentLocationRepository;
@@ -60,7 +64,12 @@ public class CurrentLocationService {
 					Guardian guardian = guardianRepository.findByUserId(user.getId())
 						.orElseThrow(
 							() -> new BusinessLogicException("등록된 보호자가 없습니다.", HttpStatus.BAD_REQUEST.value()));
-					notificationService.sendLeftSafeAreaNotification(guardian.getFcmToken()); // 여기에 타임 그거 넣어줘야함
+					if (user.getCurrentLocation().getDateTime() == null || Duration.between(user.getCurrentLocation().getDateTime(),
+							LocalDateTime.now()).toMinutes() >= 5) {
+						user.getCurrentLocation().updateDateTime(LocalDateTime.now());
+						System.out.println("out");// test
+						notificationService.sendLeftSafeAreaNotification(guardian.getFcmToken());
+					}
 				}
 			}
 		} else if (type.equals("guardian")) {

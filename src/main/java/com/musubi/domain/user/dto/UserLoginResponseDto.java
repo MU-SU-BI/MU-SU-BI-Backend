@@ -2,6 +2,7 @@ package com.musubi.domain.user.dto;
 
 import com.musubi.domain.user.domain.User;
 
+import java.util.Base64;
 import lombok.Builder;
 import lombok.Getter;
 

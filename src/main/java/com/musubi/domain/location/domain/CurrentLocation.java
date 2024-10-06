@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,8 +25,12 @@ public class CurrentLocation {
 
     private double nowLongitude; // 현재 경도
 
+    private LocalDateTime dateTime;
+
     public void updateCoordinate(double nowLatitude, double nowLongitude) {
         this.nowLatitude = nowLatitude;
         this.nowLongitude = nowLongitude;
     }
+
+    public void updateDateTime(LocalDateTime dateTime) { this.dateTime = dateTime ;}
 }

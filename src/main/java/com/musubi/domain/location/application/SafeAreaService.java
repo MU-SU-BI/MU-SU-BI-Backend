@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SafeAreaService {
     private final SafeAreaRepository safeAreaRepository;
