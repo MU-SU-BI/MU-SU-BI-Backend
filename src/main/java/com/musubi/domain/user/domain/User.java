@@ -1,5 +1,7 @@
 package com.musubi.domain.user.domain;
 
+import com.musubi.domain.community.domain.Comment;
+import com.musubi.domain.community.domain.Post;
 import com.musubi.domain.location.domain.CurrentLocation;
 import com.musubi.domain.location.domain.Location;
 import com.musubi.domain.location.domain.SafeArea;
@@ -74,6 +76,12 @@ public class User extends BaseEntity { // 보호자
 	@OneToOne(mappedBy = "user")
 	private Guardian guardian;
 
+	@OneToMany(mappedBy = "userAuthor")
+	private List<Post> posts;
+
+	@OneToMany(mappedBy = "author")
+	private List<Comment> comments;
+
 	@OneToOne
 	private CurrentLocation currentLocation;
 
@@ -107,4 +115,7 @@ public class User extends BaseEntity { // 보호자
 		this.currentLocation = currentLocation;
 	}
 
+	public boolean notHasLocation() {
+		return location == null;
+	}
 }

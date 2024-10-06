@@ -30,7 +30,7 @@ public class NotificationController {
 	@PostMapping("sos")
 	public ResponseEntity<?> sendSOSNotificationInAllCommunityUsers(@RequestBody SOSRequestDto sosRequestDto) throws
 		FirebaseMessagingException {
-		notificationService.sendNotificationInAllCommunityUsers(sosRequestDto.getGuardianID());
+		notificationService.sendNotificationInAllCommunityUsers(sosRequestDto.getGuardianId());
 		return ResponseEntity.ok().body(new DefaultResponse(200, "FCM 메시지 전송 완료"));
 	}
 }

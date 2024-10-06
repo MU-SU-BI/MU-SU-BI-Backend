@@ -2,11 +2,12 @@ package com.musubi.domain.community.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @Getter
-public class GuardianCommentCreateDto {
-	private final Long guardianId;
+public class PostCreateDto {
+	private final Long userId;
+	private final String title;
 	private final String content;
+
 }

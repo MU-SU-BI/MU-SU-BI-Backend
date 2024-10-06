@@ -16,13 +16,21 @@ public final class PostDetailResponseDto {
 	private final String authorName;
 	private final String createAt;
 
-	public static PostDetailResponseDto of(Post post) {
+	public static PostDetailResponseDto of(Post post, String type) {
+
+		String authorName = "";
+		if (type.equals("guardian")) {
+			authorName = post.getGuardianAuthor().getNickname();
+		} else {
+			authorName = post.getUserAuthor().getNickname();
+		}
+
 		return PostDetailResponseDto.builder()
 			.postId(post.getId())
 			.title(post.getTitle())
 			.content(post.getContent())
 			.createAt(post.getCreatedAt().toString())
-			.authorName(post.getGuardianAuthor().getNickname())
+			.authorName(authorName)
 			.build();
 	}
 }
