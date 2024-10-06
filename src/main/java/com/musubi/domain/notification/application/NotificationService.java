@@ -1,8 +1,11 @@
 package com.musubi.domain.notification.application;
 
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 
+import com.google.firebase.messaging.AndroidConfig;
+import com.google.firebase.messaging.AndroidNotification;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -70,10 +73,18 @@ public class NotificationService {
 
 			Message message = Message.builder()
 				.setToken(fcmToken)
+				.setAndroidConfig(AndroidConfig.builder()
+					.setNotification(
+						AndroidNotification.builder()
+							.setTitle(FCMValue.SOS.getTitle())
+							.setBody(FCMValue.SOS.getBody())
+							.setClickAction("NOTIFICATION_CLICK")
+							.build()
+					)
+					.build())
 				.putData("userId", guardian.getUser().getId().toString())
 				.setNotification(notification)
 				.build();
-
 
 			firebaseMessaging.send(message);
 		}
