@@ -6,6 +6,7 @@ import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
 import com.musubi.domain.user.domain.User;
 import com.musubi.domain.user.dto.GuardianResponseDto;
+import com.musubi.domain.user.dto.MissingUserResponseDto;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
 import com.musubi.domain.user.dto.UserLoginResponseDto;
 import com.musubi.domain.user.dto.UserSignUpRequestDto;
@@ -65,6 +66,13 @@ public class UserService {
                 .orElseThrow(() -> new BusinessLogicException("아직 등록된 보호자가 없습니다.", HttpStatus.BAD_REQUEST.value()));
 
         return GuardianResponseDto.fromEntity(guardian);
+    }
+
+    public MissingUserResponseDto missingUser(Long userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessLogicException("해당하는 User가 없습니다.", HttpStatus.BAD_REQUEST.value()));
+        return MissingUserResponseDto.fromEntity(user);
     }
 
 

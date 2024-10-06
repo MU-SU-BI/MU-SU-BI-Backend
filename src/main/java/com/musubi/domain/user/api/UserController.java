@@ -38,4 +38,10 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(new DefaultDataResponse<>(200, "내 보호자 조회 성공", userService.findMyGuardianByUserId(userId)));
     }
+
+    @GetMapping("{userId}/user")
+    ResponseEntity<?> missingUser(@PathVariable Long userId) {
+        return ResponseEntity.ok()
+                .body(new DefaultDataResponse<>(200, "도움 안내 전송 완료", userService.missingUser(userId)));
+    }
 }
