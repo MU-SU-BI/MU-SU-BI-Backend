@@ -82,8 +82,7 @@ public class User extends BaseEntity { // 보호자
 	@OneToMany(mappedBy = "userAuthor")
 	private List<Post> posts;
 
-	@Lob
-	private byte[] profile;
+	private String profile;
 
 	@OneToMany(mappedBy = "author")
 	private List<Comment> comments;
@@ -121,7 +120,7 @@ public class User extends BaseEntity { // 보호자
 		this.currentLocation = currentLocation;
 	}
 
-	public void updateProfile(byte[] profile) {
+	public void updateProfile(String profile) {
 		this.profile = profile;
 	}
 

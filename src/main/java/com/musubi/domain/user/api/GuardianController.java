@@ -1,5 +1,7 @@
 package com.musubi.domain.user.api;
 
+import java.io.IOException;
+
 import com.musubi.domain.user.application.GuardianService;
 import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginRequestDto;
@@ -54,7 +56,8 @@ public class GuardianController {
     }
 
     @PostMapping("profile")
-    ResponseEntity<?> profile(@RequestParam("image") MultipartFile image, @RequestParam("userId") Long userId) {
+    ResponseEntity<?> profile(@RequestParam("image") MultipartFile image, @RequestParam("userId") Long userId) throws
+		IOException {
         guardianService.uploadProfile(image, userId);
         return ResponseEntity.status(201).body(new DefaultResponse(201, "프로필 등록 성공"));
     }
