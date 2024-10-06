@@ -1,5 +1,6 @@
 package com.musubi.domain.community.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -85,8 +86,13 @@ public class CommentService {
 			}
 
 			List<Comment> comments = commentRepository.findByPost(post);
+			List<CommentResponseDto> response = new ArrayList<>();
 
-			return comments.stream().map(comment -> CommentResponseDto.of(comment, type)).toList();
+			for (Comment comment : comments) {
+				response.add(CommentResponseDto.of(comment, type));
+			}
+
+			return response;
 		} else {
 			Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new BusinessLogicException("올바르지 않은 Post ID 입니다.", HttpStatus.BAD_REQUEST.value()));
@@ -100,8 +106,13 @@ public class CommentService {
 			}
 
 			List<Comment> comments = commentRepository.findByPost(post);
+			List<CommentResponseDto> response = new ArrayList<>();
 
-			return comments.stream().map(comment -> CommentResponseDto.of(comment, type)).toList();
+			for (Comment comment : comments) {
+				response.add(CommentResponseDto.of(comment, type));
+			}
+
+			return response;
 		}
 	}
 }
