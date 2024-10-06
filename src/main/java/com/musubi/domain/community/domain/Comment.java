@@ -1,6 +1,7 @@
 package com.musubi.domain.community.domain;
 
 import com.musubi.domain.user.domain.Guardian;
+import com.musubi.domain.user.domain.User;
 import com.musubi.global.utils.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -32,5 +33,8 @@ public class Comment extends BaseEntity {
 
 	@ManyToOne
 	private Guardian guardianAuthor;
+
+	@ManyToOne
+	private User author;
 
 }
