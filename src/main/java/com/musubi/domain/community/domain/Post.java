@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.musubi.domain.community.dao.CommentRepository;
 import com.musubi.domain.user.domain.Guardian;
+import com.musubi.domain.user.domain.User;
 import com.musubi.global.utils.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -36,6 +37,9 @@ public class Post extends BaseEntity {
 
 	@ManyToOne
 	private Guardian guardianAuthor;
+
+	@ManyToOne
+	private User userAuthor;
 
 	public void addNewComment(Comment comment) {
 		this.comments.add(comment);

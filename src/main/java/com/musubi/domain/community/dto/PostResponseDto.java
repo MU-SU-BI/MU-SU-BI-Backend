@@ -16,11 +16,19 @@ public class PostResponseDto {
 	private final String createAt;
 	private final int commentsCount;
 
-	public static PostResponseDto of(Post post) {
+	public static PostResponseDto of(Post post, String type) {
+
+		String authorName = "";
+		if (type.equals("guardian")) {
+			authorName = post.getGuardianAuthor().getNickname();
+		} else {
+			authorName = post.getUserAuthor().getNickname();
+		}
+
 		return PostResponseDto.builder()
 			.postId(post.getId())
 			.title(post.getTitle())
-			.authorName(post.getGuardianAuthor().getNickname())
+			.authorName(authorName)
 			.commentsCount(post.getComments().size())
 			.createAt(post.getCreatedAt().toString())
 			.build();

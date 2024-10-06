@@ -16,7 +16,7 @@ public class CommentResponseDto {
 	private final String authorName;
 	private final String createAt;
 
-	public static CommentResponseDto of(Comment comment) {
+	public static CommentResponseDto of(Comment comment, String type) {
 		return CommentResponseDto.builder()
 			.commentId(comment.getId())
 			.content(comment.getContent())
