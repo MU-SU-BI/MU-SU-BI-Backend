@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SafeAreaRequestDto {
     private Long userId;
-    private double longitude;
-    private double latitude;
-    private double radius;
+    private Double longitude;
+    private Double latitude;
+    private Double radius;
 }

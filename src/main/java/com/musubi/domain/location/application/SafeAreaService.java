@@ -6,10 +6,16 @@ import com.musubi.domain.location.dto.SafeAreaRequestDto;
 import com.musubi.domain.location.dto.SafeAreaResponseDto;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.User;
+import com.musubi.domain.user.type.UserType;
+import jakarta.transaction.Transactional;
 import com.musubi.global.exception.BusinessLogicException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +24,11 @@ import org.springframework.stereotype.Service;
 public class SafeAreaService {
     private final SafeAreaRepository safeAreaRepository;
     private final UserRepository userRepository;
+
+    public static Point createPoint(Double latitude, Double longitude) {
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
+        return geometryFactory.createPoint(new Coordinate(latitude, longitude));
+    }
 
     public void updateSafeArea(SafeAreaRequestDto safeAreaRequestDto) {
 
@@ -28,6 +39,7 @@ public class SafeAreaService {
                 .latitude(safeAreaRequestDto.getLatitude())
                 .longitude(safeAreaRequestDto.getLongitude())
                 .radius(safeAreaRequestDto.getRadius())
+                .center(createPoint(safeAreaRequestDto.getLatitude(), safeAreaRequestDto.getLongitude()))
                 .user(user)
                 .build();
 
