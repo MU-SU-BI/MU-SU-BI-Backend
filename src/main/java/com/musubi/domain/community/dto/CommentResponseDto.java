@@ -16,11 +16,15 @@ public class CommentResponseDto {
 	private final String authorName;
 	private final String createAt;
 
-	public static CommentResponseDto of(Comment comment, String type) {
+	public static CommentResponseDto of(Comment comment) {
+
+		String authorName = comment.getGuardianAuthor().getNickname() == null ? comment.getAuthor().getNickname() :
+			comment.getGuardianAuthor().getNickname();
+
 		return CommentResponseDto.builder()
 			.commentId(comment.getId())
 			.content(comment.getContent())
-			.authorName(comment.getGuardianAuthor().getNickname())
+			.authorName(authorName)
 			.createAt(comment.getCreatedAt().toString())
 			.build();
 	}

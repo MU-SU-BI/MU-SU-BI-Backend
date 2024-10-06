@@ -91,7 +91,7 @@ public class CommentService {
 			List<CommentResponseDto> response = new ArrayList<>();
 
 			for (Comment comment : comments) {
-				response.add(CommentResponseDto.of(comment, type));
+				response.add(CommentResponseDto.of(comment));
 			}
 
 			return response;
@@ -111,7 +111,7 @@ public class CommentService {
 			List<CommentResponseDto> response = new ArrayList<>();
 
 			for (Comment comment : comments) {
-				response.add(CommentResponseDto.of(comment, type));
+				response.add(CommentResponseDto.of(comment));
 			}
 
 			return response;

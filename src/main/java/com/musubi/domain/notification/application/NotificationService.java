@@ -53,7 +53,6 @@ public class NotificationService {
 
 		List<String> communityFcmTokens = guardians.stream().map(Guardian::getFcmToken).toList();
 
-
 		for (String fcmToken : communityFcmTokens) {
 
 			if (fcmToken == null) {
@@ -71,8 +70,10 @@ public class NotificationService {
 
 			Message message = Message.builder()
 				.setToken(fcmToken)
+				.putData("userId", guardian.getUser().getId().toString())
 				.setNotification(notification)
 				.build();
+
 
 			firebaseMessaging.send(message);
 		}

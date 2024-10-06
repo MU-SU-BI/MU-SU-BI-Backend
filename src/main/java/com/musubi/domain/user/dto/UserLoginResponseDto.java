@@ -16,7 +16,7 @@ public final class UserLoginResponseDto {
 	private final String phoneNumber;
 	private final String homeAddress;
 	private final String sex;
-  private final byte[] profile;
+	private final byte[] profile;
 	private final String district;
 
 	public static UserLoginResponseDto fromEntity(User user) {
@@ -29,7 +29,7 @@ public final class UserLoginResponseDto {
 			.sex(user.getSex().getValue())
 			.phoneNumber(user.getPhoneNumber())
 			.homeAddress(user.getHomeAddress())
-      		.profile(user.getProfile())
+			.profile(user.getProfile())
 			.district(user.getLocationDistrict())
 			.build();
 	}
