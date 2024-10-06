@@ -15,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -26,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Builder
@@ -79,6 +81,12 @@ public class User extends BaseEntity { // 보호자
 	@OneToMany(mappedBy = "userAuthor")
 	private List<Post> posts;
 
+  @Lob
+  private byte[] profile;
+
+  @OneToOne
+  private Location location;
+
 	@OneToMany(mappedBy = "author")
 	private List<Comment> comments;
 
@@ -114,6 +122,9 @@ public class User extends BaseEntity { // 보호자
 	public void setCurrentLocation(CurrentLocation currentLocation) {
 		this.currentLocation = currentLocation;
 	}
+
+
+  public void updateProfile(byte[] profile) { this.profile = profile; }
 
 	public boolean notHasLocation() {
 		return location == null;
