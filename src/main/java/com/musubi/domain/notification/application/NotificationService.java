@@ -51,19 +51,16 @@ public class NotificationService {
 
 		List<String> communityFcmTokens = guardians.stream().map(Guardian::getFcmToken).toList();
 
-		System.out.println(communityFcmTokens);
 
 		for (String fcmToken : communityFcmTokens) {
 
-			if (fcmToken == null || guardian.getFcmToken() == null) {
+			if (fcmToken == null) {
 				continue;
 			}
 
 			if (fcmToken.equals(guardian.getFcmToken())) {
 				continue;
 			}
-
-			System.out.println(fcmToken);
 
 			Notification notification = Notification.builder()
 				.setTitle(FCMValue.SOS.getTitle())

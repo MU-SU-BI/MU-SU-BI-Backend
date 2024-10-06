@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SOSRequestDto {
-	private Long guardianID;
+	private Long guardianId;
 }
