@@ -1,6 +1,8 @@
 package com.musubi.domain.user.dao;
 
 import com.musubi.domain.user.domain.Guardian;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +18,6 @@ public interface GuardianRepository extends JpaRepository<Guardian, Long> {
     Optional<Guardian> findByNickname(String nickname);
 
     Optional<Guardian> findByUserId(Long userId);
+
+    List<Guardian> findGuardianByLocation_District(String district);
 }
