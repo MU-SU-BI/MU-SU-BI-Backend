@@ -72,6 +72,7 @@ public class NotificationService {
 				.setNotification(notification)
 				.build();
 
+
 			firebaseMessaging.send(message);
 		}
 	}

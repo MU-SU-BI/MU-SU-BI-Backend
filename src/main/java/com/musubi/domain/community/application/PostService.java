@@ -1,5 +1,6 @@
 package com.musubi.domain.community.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -65,9 +66,9 @@ public class PostService {
 		}
 	}
 
+	@Transactional
 	public List<PostResponseDto> getAllPosts(Long userId, String type) {
 		if (type.equals("guardian")) {
-
 			Guardian guardian = guardianRepository.findById(userId)
 				.orElseThrow(
 					() -> new BusinessLogicException("올바르지 않은 Guardian ID 입니다.", HttpStatus.BAD_REQUEST.value()));
@@ -79,7 +80,7 @@ public class PostService {
 			List<Post> posts = postRepository.findPostByGuardianAuthor_Location_District(
 				guardian.getLocationDistrict());
 
-			return posts.stream().map(post -> PostResponseDto.of(post, type)).toList();
+			return posts.stream().map(PostResponseDto::of).toList();
 		} else {
 			User user = userRepository.findById(userId)
 				.orElseThrow(
@@ -92,7 +93,13 @@ public class PostService {
 			List<Post> posts = postRepository.findPostByGuardianAuthor_Location_District(
 				user.getLocationDistrict());
 
-			return posts.stream().map(post -> PostResponseDto.of(post, type)).toList();
+			List<PostResponseDto> response = new ArrayList<>();
+
+			for (Post post : posts) {
+				response.add(PostResponseDto.of(post));
+			}
+
+			return response;
 		}
 	}
 
@@ -109,7 +116,7 @@ public class PostService {
 			Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new BusinessLogicException("올바르지 않은 Post ID 입니다.", HttpStatus.BAD_REQUEST.value()));
 
-			return PostDetailResponseDto.of(post, type);
+			return PostDetailResponseDto.of(post);
 		} else {
 			User user = userRepository.findById(userId)
 				.orElseThrow(
@@ -122,7 +129,7 @@ public class PostService {
 			Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new BusinessLogicException("올바르지 않은 Post ID 입니다.", HttpStatus.BAD_REQUEST.value()));
 
-			return PostDetailResponseDto.of(post, type);
+			return PostDetailResponseDto.of(post);
 		}
 	}
 }
