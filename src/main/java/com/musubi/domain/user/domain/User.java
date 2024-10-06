@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -81,11 +82,8 @@ public class User extends BaseEntity { // 보호자
 	@OneToMany(mappedBy = "userAuthor")
 	private List<Post> posts;
 
-  @Lob
-  private byte[] profile;
-
-  @OneToOne
-  private Location location;
+	@Lob
+	private byte[] profile;
 
 	@OneToMany(mappedBy = "author")
 	private List<Comment> comments;
@@ -123,8 +121,9 @@ public class User extends BaseEntity { // 보호자
 		this.currentLocation = currentLocation;
 	}
 
-
-  public void updateProfile(byte[] profile) { this.profile = profile; }
+	public void updateProfile(byte[] profile) {
+		this.profile = profile;
+	}
 
 	public boolean notHasLocation() {
 		return location == null;
