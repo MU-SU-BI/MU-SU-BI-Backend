@@ -1,5 +1,6 @@
 package com.musubi.domain.community.application;
 
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import com.musubi.global.exception.BusinessLogicException;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 	private final CommentRepository commentRepository;

@@ -2,6 +2,7 @@ package com.musubi.domain.user.dto;
 
 import com.musubi.domain.user.domain.User;
 
+import java.util.Base64;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -28,7 +29,7 @@ public final class UserLoginResponseDto {
 			.sex(user.getSex().getValue())
 			.phoneNumber(user.getPhoneNumber())
 			.homeAddress(user.getHomeAddress())
-      .profile(user.getProfile())
+      		.profile(user.getProfile())
 			.district(user.getLocationDistrict())
 			.build();
 	}

@@ -1,5 +1,6 @@
 package com.musubi.domain.notification.application;
 
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class NotificationService {
 	private final FirebaseMessaging firebaseMessaging;
