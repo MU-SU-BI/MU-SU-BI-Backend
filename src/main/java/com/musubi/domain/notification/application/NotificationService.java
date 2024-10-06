@@ -52,6 +52,11 @@ public class NotificationService {
 		List<String> communityFcmTokens = guardians.stream().map(Guardian::getFcmToken).toList();
 
 		for (String fcmToken : communityFcmTokens) {
+
+			if (fcmToken == null || guardian.getFcmToken() == null) {
+				continue;
+			}
+
 			if (fcmToken.equals(guardian.getFcmToken())) {
 				continue;
 			}
