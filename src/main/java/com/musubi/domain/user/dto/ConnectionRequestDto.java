@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ConnectionRequestDto {
-    private Long userId;
-    private String disabledName;
-    private String disabledPhoneNumber;
+	private Long userId;
+	private String disabledName;
+	private String disabledPhoneNumber;
 }

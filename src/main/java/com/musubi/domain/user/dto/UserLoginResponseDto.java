@@ -2,7 +2,6 @@ package com.musubi.domain.user.dto;
 
 import com.musubi.domain.user.domain.User;
 
-import java.util.Base64;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,7 +15,7 @@ public final class UserLoginResponseDto {
 	private final String phoneNumber;
 	private final String homeAddress;
 	private final String sex;
-	private final byte[] profile;
+	private final String profile;
 	private final String district;
 
 	public static UserLoginResponseDto fromEntity(User user) {
