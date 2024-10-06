@@ -9,13 +9,17 @@ import com.musubi.domain.user.dto.ConnectionRequestDto;
 import com.musubi.domain.user.dto.ConnectionResponseDto;
 import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginResponseDto;
+import com.musubi.domain.user.dto.GuardianProfileRequestDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
 import com.musubi.domain.user.dto.UserResponseDto;
 import com.musubi.global.exception.BusinessLogicException;
 import jakarta.transaction.Transactional;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -74,6 +78,28 @@ public class GuardianService {
         return ConnectionResponseDto.fromEntity(user);
     }
 
+    @Transactional
+    public void uploadProfile(MultipartFile image, Long userId) {
+
+        if (image == null)
+            throw new BusinessLogicException("파일이 존재하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+
+        Guardian guardian = guardianRepository.findById(userId)
+                .orElseThrow(()-> new BusinessLogicException("존재 하지 않는 보호자 입니다.",HttpStatus.BAD_REQUEST.value()));
+
+        if (guardian.getUser() == null)
+            throw new BusinessLogicException("연동된 User가 존재하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+        else {
+            User user = guardian.getUser();
+            try {
+                user.updateProfile(image.getBytes());
+            } catch (IOException e) {
+                throw new BusinessLogicException("파일이 올바르지 않습니다.", HttpStatus.BAD_REQUEST.value());
+            }
+        }
+    }
+
+    @Transactional
     public UserResponseDto findMyUserById(Long guardianId) {
 
         User user = userRepository.findByGuardianId(guardianId)
