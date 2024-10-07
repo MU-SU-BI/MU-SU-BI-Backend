@@ -1,14 +1,12 @@
 package com.musubi.global.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.UUID;
 
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +51,12 @@ public class S3Util {
 	public String putS3(File uploadFile, String fileName) {
 		amazonS3.putObject(new PutObjectRequest(bucket, fileName, uploadFile)
 			.withCannedAcl(CannedAccessControlList.PublicRead));
+		return amazonS3.getUrl(bucket, fileName).toString();
+	}
+
+	public String putS3Maps(InputStream inputStream, String fileName, ObjectMetadata objectMetadata) {
+		amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+				.withCannedAcl(CannedAccessControlList.PublicRead));
 		return amazonS3.getUrl(bucket, fileName).toString();
 	}
 
