@@ -1,6 +1,7 @@
 package com.musubi.domain.user.application;
 
 
+import com.musubi.domain.location.application.NaverMapApiService;
 import com.musubi.domain.user.dao.GuardianRepository;
 import com.musubi.domain.user.dao.UserRepository;
 import com.musubi.domain.user.domain.Guardian;
@@ -24,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final GuardianRepository guardianRepository;
+    private final NaverMapApiService naverMapApiService;
 
     public void signUpDemo(UserSignUpRequestDto userSignUpRequestDto) {
 
@@ -72,7 +74,7 @@ public class UserService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessLogicException("해당하는 User가 없습니다.", HttpStatus.BAD_REQUEST.value()));
-        return MissingUserResponseDto.fromEntity(user);
+        return MissingUserResponseDto.fromEntity(user, naverMapApiService.getMissingMap(user));
     }
 
 
