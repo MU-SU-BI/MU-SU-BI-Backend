@@ -10,8 +10,10 @@ import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
 import com.musubi.domain.user.dto.UserLoginRequestDto;
 import com.musubi.global.utils.DefaultDataResponse;
 import com.musubi.global.utils.DefaultResponse;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,41 +26,40 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/guardians")
 public class GuardianController {
-    private final GuardianService guardianService;
+	private final GuardianService guardianService;
 
-    @PostMapping("signup")
-    ResponseEntity<?> signUp(@RequestBody @Valid GuardianSignUpRequestDto guardianSignUpRequestDto) {
-        guardianService.signUpDemo(guardianSignUpRequestDto);
-        return ResponseEntity.status(201).body(new DefaultResponse(201, "회원가입 성공"));
-    }
+	@PostMapping("signup")
+	ResponseEntity<?> signUp(@RequestBody @Valid GuardianSignUpRequestDto guardianSignUpRequestDto) {
+		guardianService.signUpDemo(guardianSignUpRequestDto);
+		return ResponseEntity.status(201).body(new DefaultResponse(201, "회원가입 성공"));
+	}
 
-    @PostMapping("login")
-    ResponseEntity<?> login(@RequestBody @Valid GuardianLoginRequestDto guardianLoginRequestDto) {
-        return ResponseEntity.status(200)
-                .body(new DefaultDataResponse<>(200, "로그인 성공", guardianService.loginDemo(guardianLoginRequestDto)));
-    }
+	@PostMapping("login")
+	ResponseEntity<?> login(@RequestBody @Valid GuardianLoginRequestDto guardianLoginRequestDto) {
+		return ResponseEntity.status(200)
+			.body(new DefaultDataResponse<>(200, "로그인 성공", guardianService.loginDemo(guardianLoginRequestDto)));
+	}
 
-    @PostMapping("connection")
-    ResponseEntity<?> connection(@RequestBody @Valid ConnectionRequestDto connectionRequestDto) {
-        return ResponseEntity.status(200)
-                .body(new DefaultDataResponse<>(200, "연동 성공", guardianService.connection(connectionRequestDto)));
-    }
+	@PostMapping("connection")
+	ResponseEntity<?> connection(@RequestBody @Valid ConnectionRequestDto connectionRequestDto) {
+		return ResponseEntity.status(200)
+			.body(new DefaultDataResponse<>(200, "연동 성공", guardianService.connection(connectionRequestDto)));
+	}
 
-    @GetMapping("{guardianId}/user")
-    ResponseEntity<?> findMyUser(@PathVariable Long guardianId) {
-        return ResponseEntity.ok()
-                .body(new DefaultDataResponse<>(200, "내 유저 조회 성공", guardianService.findMyUserById(guardianId)));
-    }
+	@GetMapping("{guardianId}/user")
+	ResponseEntity<?> findMyUser(@PathVariable Long guardianId) {
+		return ResponseEntity.ok()
+			.body(new DefaultDataResponse<>(200, "내 유저 조회 성공", guardianService.findMyUserById(guardianId)));
+	}
 
-    @PostMapping("profile")
-    ResponseEntity<?> profile(@RequestParam("image") MultipartFile image, @RequestParam("userId") Long userId) throws
+	@PostMapping("profile")
+	ResponseEntity<?> profile(@RequestParam("image") MultipartFile image, @RequestParam("userId") Long userId) throws
 		IOException {
-        guardianService.uploadProfile(image, userId);
-        return ResponseEntity.status(201).body(new DefaultResponse(201, "프로필 등록 성공"));
-    }
+		return ResponseEntity.status(201)
+			.body(new DefaultDataResponse<>(201, "프로필 등록 성공", guardianService.uploadProfile(image, userId)));
+	}
 }

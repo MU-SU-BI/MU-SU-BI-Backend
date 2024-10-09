@@ -10,6 +10,7 @@ import com.musubi.domain.user.dto.GuardianLoginRequestDto;
 import com.musubi.domain.user.dto.GuardianLoginResponseDto;
 import com.musubi.domain.user.dto.GuardianProfileRequestDto;
 import com.musubi.domain.user.dto.GuardianSignUpRequestDto;
+import com.musubi.domain.user.dto.UserProfileDto;
 import com.musubi.domain.user.dto.UserResponseDto;
 import com.musubi.global.exception.BusinessLogicException;
 
@@ -77,7 +78,6 @@ public class GuardianService {
 				connectionRequestDto.getDisabledPhoneNumber())
 			.orElseThrow(() -> new BusinessLogicException("해당 하는 User가 존재하지 않습니다", HttpStatus.BAD_REQUEST.value()));
 
-
 		Guardian guardian = guardianRepository.findById(connectionRequestDto.getUserId())
 			.orElseThrow(() -> new BusinessLogicException("존재 하지 않은 보호자 입니다.", HttpStatus.BAD_REQUEST.value()));
 
@@ -85,7 +85,7 @@ public class GuardianService {
 		return ConnectionResponseDto.fromEntity(user);
 	}
 
-	public void uploadProfile(MultipartFile image, Long userId) throws IOException {
+	public UserProfileDto uploadProfile(MultipartFile image, Long userId) throws IOException {
 		if (image == null)
 			throw new BusinessLogicException("파일이 존재하지 않습니다.", HttpStatus.BAD_REQUEST.value());
 
@@ -96,7 +96,8 @@ public class GuardianService {
 			throw new BusinessLogicException("연동된 User가 존재하지 않습니다.", HttpStatus.BAD_REQUEST.value());
 		}
 		User user = guardian.getUser();
-		s3ProfileImageUploadService.upload(image, user);
+
+		return new UserProfileDto(s3ProfileImageUploadService.upload(image, user));
 	}
 
 	@Transactional

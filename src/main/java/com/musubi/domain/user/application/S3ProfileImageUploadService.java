@@ -22,7 +22,7 @@ public class S3ProfileImageUploadService {
 
 	private final S3Util s3Util;
 
-	public void upload(MultipartFile multipartFile, User user) throws IOException {
+	public String upload(MultipartFile multipartFile, User user) throws IOException {
 		String originalFileName = multipartFile.getOriginalFilename();
 		String uuid = UUID.randomUUID().toString();
 		String uploadFileName = "musubi_profile/" + uuid + "_" + originalFileName.replaceAll("\\s", "_");
@@ -35,6 +35,8 @@ public class S3ProfileImageUploadService {
 		s3Util.removeNewFile(uploadFile);
 
 		user.updateProfile(uploadImageUrl);
+
+		return uploadImageUrl;
 	}
 
 	public void updateFile(MultipartFile newFile, String oldFileName, User user) throws IOException {
